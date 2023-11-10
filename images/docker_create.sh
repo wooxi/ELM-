@@ -23,8 +23,8 @@ DOCKER_INSTALL() {
 
 
 DOCKER_UP() {
-    chmod +x /elmmb
-    cd /elmmb
+    chmod +x /DATA/AppData/elem
+    cd /DATA/AppData/elem
 	
 	docker stop elmmb
 	
@@ -32,7 +32,7 @@ DOCKER_UP() {
 	
 	docker rmi elmmb
 
-    if [ ! -f "/elmmb/Dockerfile" ]; then
+    if [ ! -f "/DATA/AppData/elem/Dockerfile" ]; then
         wget https://ghproxy.com/https://raw.githubusercontent.com/lu0b0/ELM/main/images/Dockerfile -O /elmmb/Dockerfile
     fi
     
@@ -44,7 +44,7 @@ DOCKER_UP() {
     docker build -t='elmmb' .
 }
 
-echo -e $"\n欢迎使用饿了么登陆面板2.7 Docker一键部署脚本"
+echo -e $"\n欢迎使用饿了么登陆面板2.8 Docker一键部署脚本"
 read -p "输入Y/y确认安装 跳过安装请直接回车:  " CONFIRM
 CONFIRM=${CONFIRM:-"N"}
 
@@ -93,9 +93,9 @@ fi
 read -p "输入容器映射端口: （回车默认为3000）" pp
 pp=${pp:-"3000"}
 if [[ ${pp} != "3000" || ${pp} != "3000" ]];then
-	eval "docker run -dit   -v /elmmb:/etc/elm   -p $pp:3000   --name elmmb   --hostname elmmb   --restart unless-stopped    --restart always   elmmb:latest"
+	eval "docker run -dit   -v /DATA/AppData/elem:/etc/elm   -p $pp:3000   --name elmmb   --hostname elmmb   --restart unless-stopped    --restart always   luobook/elmmb:latest"
 else	
-	eval "docker run -dit   -v /elmmb:/etc/elm   -p 3000:3000   --name elmmb   --hostname elmmb   --restart unless-stopped    --restart always   elmmb:latest"
+	eval "docker run -dit   -v /elmmb:/etc/elm   -p 3000:3000   --name elmmb   --hostname elmmb   --restart unless-stopped    --restart always   luobook/elmmb:latest"
 fi
 
 exit 0
